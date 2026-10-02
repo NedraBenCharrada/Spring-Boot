@@ -1,10 +1,6 @@
 package tn.esprit.autoloc.autolocapi.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +20,15 @@ public class Maintenance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMaintenance;
 
+    @Column(nullable = false)
     private LocalDate dateDebut;
+
     private LocalDate dateFin;
+
+    @Column(length = 255)
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_vehicule", nullable = false)
+    private Vehicule vehicule;
 }

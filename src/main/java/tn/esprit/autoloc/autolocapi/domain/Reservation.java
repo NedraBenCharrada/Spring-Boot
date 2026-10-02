@@ -1,12 +1,6 @@
 package tn.esprit.autoloc.autolocapi.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,9 +20,24 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idReservation;
 
+    @Column(nullable = false)
     private LocalDate dateDebut;
+
+    @Column(nullable = false)
     private LocalDate dateFin;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
     private StatutReservation statut;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_vehicule", nullable = false)
+    private Vehicule vehicule;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_client", nullable = false)
+    private Client client;
+
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
+    private Contrat contrat;
 }

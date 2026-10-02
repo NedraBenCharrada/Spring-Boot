@@ -1,14 +1,13 @@
 package tn.esprit.autoloc.autolocapi.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "agence")
@@ -22,8 +21,21 @@ public class Agence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAgence;
 
+    @Column(nullable = false, length = 100)
     private String nom;
+
+    @Column(nullable = false, length = 50)
     private String ville;
+
+    @Column(nullable = false, length = 150)
     private String adresse;
+
+    @Column(length = 20)
     private String telephone;
+
+    @OneToMany(mappedBy = "agence", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Employe> employes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "agence")
+    private List<Vehicule> vehicules = new ArrayList<>();
 }
