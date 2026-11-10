@@ -1,5 +1,6 @@
 package tn.esprit.autoloc.autolocapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class Employe {
     private RoleEmploye role;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_agence", nullable = false)
+    @JoinColumn(name = "id_agence")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "employes", "vehicules"})
     private Agence agence;
 }
