@@ -33,4 +33,10 @@ public class AgenceController {
     public List<Agence> addAllAgence(@RequestBody List<Agence> agences) {
         return agenceService.addAgences(agences);
     }
+
+
+    @GetMapping("/GetAgenceByVille/{ville}")
+    public List<Agence> getAgencesByVille(@PathVariable String ville) {
+        return agenceService.retrieveAgencesByVille(ville);
+    }
 }

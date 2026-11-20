@@ -5,12 +5,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.autoloc.autolocapi.domain.Agence;
+import tn.esprit.autoloc.autolocapi.domain.CategorieVehicule;
 import tn.esprit.autoloc.autolocapi.domain.Equipement;
+import tn.esprit.autoloc.autolocapi.domain.StatutVehicule;
 import tn.esprit.autoloc.autolocapi.domain.Vehicule;
 import tn.esprit.autoloc.autolocapi.repository.AgenceRepository;
 import tn.esprit.autoloc.autolocapi.repository.EquipementRepository;
 import tn.esprit.autoloc.autolocapi.repository.VehiculeRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -85,5 +88,35 @@ public class VehiculeServiceImpl implements IVehiculeService {
 
         vehicule.getEquipements().remove(equipement);
         return vehiculeRepository.save(vehicule);
+    }
+
+    @Override
+    public List<Vehicule> retrieveVehiculesByMarque(String marque) {
+        return vehiculeRepository.findByMarque(marque);
+    }
+
+    @Override
+    public List<Vehicule> retrieveVehiculesByCategorie(CategorieVehicule categorie) {
+        return vehiculeRepository.findByCategorie(categorie);
+    }
+
+    @Override
+    public List<Vehicule> retrieveVehiculesDisponibles() {
+        return vehiculeRepository.findByStatut(StatutVehicule.DISPONIBLE);
+    }
+
+    @Override
+    public List<Vehicule> retrieveVehiculesByMarqueContaining(String chaine) {
+        return vehiculeRepository.findByMarqueContainingIgnoreCase(chaine);
+    }
+
+    @Override
+    public List<Vehicule> retrieveVehiculesTarifSuperieur(BigDecimal tarif) {
+        return vehiculeRepository.findByTarifJournalierGreaterThan(tarif);
+    }
+
+    @Override
+    public List<Vehicule> retrieveVehiculesDisponiblesByMarque(String marque) {
+        return vehiculeRepository.findByMarqueAndStatut(marque, StatutVehicule.DISPONIBLE);
     }
 }
