@@ -48,4 +48,14 @@ public class ReservationServiceImpl implements IReservationService {
     public List<Reservation> retrieveReservationsDebutApres(LocalDate date) {
         return reservationRepository.findByDateDebutAfter(date);
     }
+
+    @Override
+    public List<Reservation> getReservationsByClient(Long idClient) {
+        return reservationRepository.getReservationsByClient(idClient);
+    }
+
+    @Override
+    public List<Object[]> countReservationsByClient() {
+        return reservationRepository.countReservationsByClient();
+    }
 }

@@ -36,10 +36,19 @@ public class ReservationController {
         return reservationService.addReservations(reservations);
     }
 
-
     @GetMapping("/GetReservationDebutApres/{date}")
     public List<Reservation> getReservationsDebutApres(
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return reservationService.retrieveReservationsDebutApres(date);
+    }
+
+    @GetMapping("/GetReservationByClient/{idClient}")
+    public List<Reservation> getReservationsByClient(@PathVariable Long idClient) {
+        return reservationService.getReservationsByClient(idClient);
+    }
+
+    @GetMapping("/CountReservationByClient")
+    public List<Object[]> countReservationsByClient() {
+        return reservationService.countReservationsByClient();
     }
 }

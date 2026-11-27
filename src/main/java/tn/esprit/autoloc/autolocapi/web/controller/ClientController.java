@@ -1,8 +1,9 @@
 package tn.esprit.autoloc.autolocapi.web.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.autoloc.autolocapi.domain.Client;
+import tn.esprit.autoloc.autolocapi.DTO.ClientDto;
 import tn.esprit.autoloc.autolocapi.service.IclientService;
 
 import java.util.List;
@@ -12,21 +13,35 @@ import java.util.List;
 @RequestMapping("/Client")
 public class ClientController {
 
-    final IclientService iclient;
+    private final IclientService clientService;
 
     @PostMapping("/AddClient")
-    public Client AddClient (@RequestBody Client c){return iclient.addClient(c);}
+    public ClientDto addClient(@Valid @RequestBody ClientDto c) {
+        return clientService.addClient(c);
+    }
 
     @GetMapping("/GetClient")
-    public List<Client> getclients(){
-        return iclient.retrieveAllClients();
+    public List<ClientDto> getClients() {
+        return clientService.retrieveAllClients();
     }
-    @DeleteMapping ("/DeleteClient/{id}")
-    public void DeleteClient(@PathVariable long id){
-        iclient.removeClient(id);
+
+    @GetMapping("/GetClient/{id}")
+    public ClientDto getClient(@PathVariable Long id) {
+        return clientService.retrieveClient(id);
     }
+
+    @GetMapping("/GetClientDto/{id}")
+    public ClientDto getClientDto(@PathVariable Long id) {
+        return clientService.retrieveClientDto(id);
+    }
+
+    @DeleteMapping("/DeleteClient/{id}")
+    public void deleteClient(@PathVariable Long id) {
+        clientService.removeClient(id);
+    }
+
     @PostMapping("/addAllClient")
-    public List<Client> addAllClient(@RequestBody List<Client> ListeClient){
-        return iclient.addClients(ListeClient);
+    public List<ClientDto> addAllClient(@Valid @RequestBody List<ClientDto> clients) {
+        return clientService.addClients(clients);
     }
 }

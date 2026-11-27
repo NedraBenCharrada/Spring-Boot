@@ -51,7 +51,6 @@ public class VehiculeController {
         return vehiculeService.desaffecterEquipement(idVehicule, idEquipement);
     }
 
-
     @GetMapping("/GetVehiculeByMarque/{marque}")
     public List<Vehicule> getVehiculesByMarque(@PathVariable String marque) {
         return vehiculeService.retrieveVehiculesByMarque(marque);
@@ -67,7 +66,6 @@ public class VehiculeController {
         return vehiculeService.retrieveVehiculesDisponibles();
     }
 
-
     @GetMapping("/GetVehiculeByMarqueContaining/{chaine}")
     public List<Vehicule> getVehiculesByMarqueContaining(@PathVariable String chaine) {
         return vehiculeService.retrieveVehiculesByMarqueContaining(chaine);
@@ -81,5 +79,15 @@ public class VehiculeController {
     @GetMapping("/GetVehiculeDisponibleByMarque/{marque}")
     public List<Vehicule> getVehiculesDisponiblesByMarque(@PathVariable String marque) {
         return vehiculeService.retrieveVehiculesDisponiblesByMarque(marque);
+    }
+
+    @GetMapping("/GetVehiculeByAgence/{idAgence}")
+    public List<Vehicule> getVehiculesByAgence(@PathVariable Long idAgence) {
+        return vehiculeService.getVehiculesByAgence(idAgence);
+    }
+
+    @GetMapping("/CountVehiculeByAgence")
+    public List<Object[]> countVehiculesByAgence() {
+        return vehiculeService.countVehiculesByAgence();
     }
 }
